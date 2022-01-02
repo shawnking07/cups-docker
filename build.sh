@@ -86,7 +86,7 @@ fi
     --with-docdir=/usr/share/cups/doc-root \
     --localedir=/usr/share/cups/locale \
     --enable-libpaper \
-    --enable-ssl \
+    --disable-ssl \
     --enable-gnutls \
     --enable-threads \
     --enable-static \

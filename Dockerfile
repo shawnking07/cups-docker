@@ -28,7 +28,14 @@ RUN chmod +x \
 RUN chmod +x ./build.sh ${PREFIX}/bin/fakePkg.sh && \
     sync && \
     ./build.sh && \
-    rm -f ./build.sh
+    rm -f ./build.sh \
+    cupsctl --remote-admin --remote-any --share-printers && \
+	useradd \
+    --groups=sudo,lp,lpadmin --create-home --home-dir=/home/print \
+    --shell=/bin/bash \
+    --password=$(mkpasswd print) \
+    print && \
+    sed -i '/%sudo[[:space:]]/ s/ALL[[:space:]]*$/NOPASSWD:ALL/' /etc/sudoers
 
 VOLUME ["/config"]
 
