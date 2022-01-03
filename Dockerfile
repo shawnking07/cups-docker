@@ -1,5 +1,4 @@
 FROM debian:buster-slim
-MAINTAINER Jacob Alberty <jacob.alberty@foundigital.com>
 
 ARG DEBIAN_FRONTEND=noninteractive
 ARG CUPS_VERSION=2.4.0
@@ -18,6 +17,7 @@ COPY docker-healthcheck.sh ${PREFIX}/bin/docker-healthcheck.sh
 COPY drivers ${PREFIX}/share/drivers
 COPY functions ${PREFIX}/functions
 COPY pre_build /usr/local/docker/pre_build
+COPY cupsd.conf ./cupsd.conf
 RUN chmod +x \
     ${PREFIX}/bin/docker-entrypoint.sh \
     ${PREFIX}/bin/docker-healthcheck.sh \
@@ -28,19 +28,13 @@ RUN chmod +x \
 RUN chmod +x ./build.sh ${PREFIX}/bin/fakePkg.sh && \
     sync && \
     ./build.sh && \
-    rm -f ./build.sh \
-    cupsctl --remote-admin --remote-any --share-printers && \
-	useradd \
-    --groups=sudo,lp,lpadmin --create-home --home-dir=/home/print \
-    --shell=/bin/bash \
-    --password=$(mkpasswd print) \
-    print && \
-    sed -i '/%sudo[[:space:]]/ s/ALL[[:space:]]*$/NOPASSWD:ALL/' /etc/sudoers
+    rm -f ./build.sh
+
+RUN useradd -g lpadmin cups && echo "cups:cups" | chpasswd
 
 VOLUME ["/config"]
 
 EXPOSE 631/tcp 631/udp
-
 
 HEALTHCHECK CMD ${PREFIX}/bin/docker-healthcheck.sh
 

@@ -86,7 +86,7 @@ fi
     --with-docdir=/usr/share/cups/doc-root \
     --localedir=/usr/share/cups/locale \
     --enable-libpaper \
-    --disable-ssl \
+    --enable-ssl \
     --enable-gnutls \
     --enable-threads \
     --enable-static \
@@ -139,6 +139,7 @@ rm -rf /var/lib/apt/lists/*
 
 # save /etc/cups to recreate it if needed.
 mkdir -p "${PREFIX}/skel/cups"
+mv ./cupsd.conf /etc/cups/cupsd.conf
 mv /etc/cups "${PREFIX}/skel/cups/etc"
 
 # Use symbolic links to redirect a few standard cups directories to the volume
