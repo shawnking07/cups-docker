@@ -1,5 +1,13 @@
 # Cups docker image
 
+## TL;DR
+
+```bash
+docker pull ghcr.io/shawnking07/cups-docker:master
+```
+
+account: `cups`, password: `cups`
+
 ## Description
 
 This image provides builds of cups that include a few additional features to make it easier to install and maintain within docker
