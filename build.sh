@@ -65,7 +65,8 @@ apt-get install -qy --no-install-recommends ${BUILD_DEPS} \
     libpoppler-cpp0v5 \
     libtiff5 \
     mupdf-tools \
-    poppler-utils
+    poppler-utils \
+    fonts-dejavu-core
 mkdir -p "${SOURCEDIR}"
 cd "${SOURCEDIR}"
 
